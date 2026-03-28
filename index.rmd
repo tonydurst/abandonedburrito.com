@@ -1,6 +1,6 @@
 ---
 title: "Tony Durst"
-image: "/Users/tonydurst/tonydurst.com/tdtoon.jpg"
+image: "IMG_1453-2.jpg
 links:
   - label: LinkedIn
     url: "https://www.linkedin.com/in/tony-durst-314173/"
