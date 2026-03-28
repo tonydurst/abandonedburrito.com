@@ -1,0 +1,109 @@
+---
+title: "Abandoned Burrito — Site Setup Session Notes"
+author: "tonydurst"
+date: "2026-03-28"
+output: html_document
+---
+
+# Abandoned Burrito Site Setup
+
+This document summarizes the work completed during the initial setup session for the [abandonedburrito.com](https://tonydurst.github.io/abandonedburrito.com/) GitHub Pages site.
+
+---
+
+## 1. Troubleshooting the 404 Error
+
+The site was returning a 404 because **GitHub Pages had never been enabled** for the repository.
+
+**Fix:** Go to Settings → Pages → set Branch to `main` / `(root)` and click Save.
+
+Additional issues found:
+- The `.github/workflows/jekyll-docker.yml` Action was building the site but never deploying it (missing `actions/upload-pages-artifact` and `actions/deploy-pages` steps).
+- The repo had a plain `index.html` (static Bootstrap page) which does not need Jekyll at all.
+- **Recommended approach:** Use "Deploy from a branch" in Pages settings — no Actions workflow needed.
+
+---
+
+## 2. Updating the Image
+
+The `index.html` had a large base64-encoded image embedded directly in the `src` attribute of the `<img>` tag on line 47. This made the file 666 KB.
+
+**Fix:** Replace the base64 blob with a reference to the `burrito.jpeg` file already in the repo:
+
+```html
+<img src="burrito.jpeg" class="..." alt="...">
+```
+
+This dramatically reduced the file size.
+
+---
+
+## 3. Updating the Subheading
+
+Changed the subheading text on lines 53 and 56 (desktop and mobile versions):
+
+- **Before:** `Just a small town boy in a big city world`
+- **After:** `Has anyone seen my burrito?`
+
+---
+
+## 4. Removing Social Links
+
+Removed all four social/contact links (LinkedIn, Twitter, GitHub, Email) from both the desktop (`d-none d-sm-block`) and mobile (`d-block d-sm-none`) layout sections.
+
+Replaced with placeholder comments for future use:
+
+```html
+<!-- Links placeholder (desktop) -->
+<div class="row justify-content-center align-items-center">
+  <div class="col-8 text-center d-none d-sm-block">
+    <!-- TODO: Add links here -->
+  </div>
+</div>
+
+<!-- Links placeholder (mobile) -->
+<div class="row justify-content-center align-items-center">
+  <div class="col-8 m-1 text-center d-block d-sm-none">
+    <!-- TODO: Add links here -->
+  </div>
+</div>
+```
+
+---
+
+## 5. Changing the Background Color
+
+Changed the body background color in line 20 of `index.html`:
+
+- **Before:** `#3A66B7` (steel blue)
+- **After:** `#C4622D` (adobe terracotta — inspired by the red rock landscapes of the American Southwest)
+
+```css
+body {background-color: #C4622D; font-family: 'Merriweather', serif; color: #FEFEFA;}
+      ```
+
+      ---
+
+      ## Current File Structure
+
+      ```
+      abandonedburrito.com/
+      ├── .github/
+      │   └── workflows/
+      │       └── jekyll-docker.yml   # Not actively used
+      ├── burrito.jpeg                 # Profile/hero image
+      ├── index.html                   # Main site page
+      ├── index.rmd                    # Original R Markdown source
+      ├── README.md
+      ├── tonydurst.com.Rproj
+      └── abandoned-burrito-session-notes.Rmd  # This file
+      ```
+
+      ---
+
+      ## TODO
+
+      - [ ] Enable GitHub Pages (Settings → Pages → Branch: main / root)
+      - [ ] Add future links back into the placeholder sections
+      - [ ] Consider removing or fixing the unused Jekyll Actions workflow
+      
